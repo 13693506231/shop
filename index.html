@@ -10,6 +10,46 @@
 		<script type="text/javascript" src="http://web.shop.com:8020/webcode/resources/js/jquery-heima-0.0.1.js" ></script>
 		<script type="text/javascript" src="http://web.shop.com:8020/webcode/resources/js/heima-include.js" ></script>
 	</head>
+	<script>
+		$(function(){
+			HM.ajax("/goodsServlet?md=getNewAndHotList","",function(vo){
+			if(vo.code==1){
+				//有数据
+				var newlist=vo.data.new;
+				var hotlist=vo.data.hot;
+
+				//改变登录按钮那块数据
+				for(goods of newlist){
+					var newGood =  "<div class=\"col-md-2\" style=\"text-align:center;height:220px;padding:10px 0px;\">\n" +
+        "\t\t\t\t\t\t<a href=\"view/product/info.html?pid="+goods.id+"\">\n" +
+        "\t\t\t\t\t\t\t<img src=\"http://web.shop.com:8020/webcode/"+goods.pimage+"\" width=\"130\" height=\"130\" style=\"display: inline-block;\">\n" +
+        "\t\t\t\t\t\t</a>\n" +
+        "\t\t\t\t\t\t<p><a href=\"view/product/info.html?pid="+goods.id+"\" style='color:#666'>"+goods.pname+"</a></p>\n" +
+        "\t\t\t\t\t\t<p><font color=\"#E4393C\" style=\"font-size:16px\">&yen;"+goods.shop_price+"</font></p>\n" +
+        "\t\t\t\t\t</div>";
+					$("#newgoods").append(newGood);
+				}
+				
+				for(goods of hotlist){
+					var newGood =  "<div class=\"col-md-2\" style=\"text-align:center;height:220px;padding:10px 0px;\">\n" +
+        "\t\t\t\t\t\t<a href=\"view/product/info.html?pid="+goods.id+"\">\n" +
+        "\t\t\t\t\t\t\t<img src=\"http://web.shop.com:8020/webcode/"+goods.pimage+"\" width=\"130\" height=\"130\" style=\"display: inline-block;\">\n" +
+        "\t\t\t\t\t\t</a>\n" +
+        "\t\t\t\t\t\t<p><a href=\"view/product/info.html?pid="+goods.id+"\" style='color:#666'>"+goods.pname+"</a></p>\n" +
+        "\t\t\t\t\t\t<p><font color=\"#E4393C\" style=\"font-size:16px\">&yen;"+goods.shop_price+"</font></p>\n" +
+        "\t\t\t\t\t</div>";
+					$("#hotgoods").append(newGood);
+				}
+				
+			}else{
+				//没有登录 啥也不做就行
+			}
+			
+			
+			
+		})
+		})
+	</script>
 
 	<body>
 		<div class="container-fluid">
@@ -69,7 +109,7 @@
 				<div class="col-md-2" style="border:1px solid #E7E7E7;border-right:0;padding:0;">
 					<img src="http://web.shop.com:8020/webcode/resources/products/hao/big01.jpg" width="205" height="404" style="display: inline-block;"/>
 				</div>
-				<div class="col-md-10">
+				<div class="col-md-10" id="hotgoods">
 					<div class="col-md-6" style="text-align:center;height:200px;padding:0px;">
 						<a href="product_info.htm">
 							<img src="http://web.shop.com:8020/webcode/resources/products/hao/middle01.jpg" width="516px" height="200px" style="display: inline-block;">
@@ -90,88 +130,26 @@
             -->
 			<div class="container-fluid">
 				<div class="col-md-12">
-					<h2>热门商品&nbsp;&nbsp;<img src="http://web.shop.com:8020/webcode/resources/img/title2.jpg"/></h2>
+					<h2>最新商品&nbsp;&nbsp;<img src="http://web.shop.com:8020/webcode/resources/img/title2.jpg"/></h2>
 				</div>
 				<div class="col-md-2" style="border:1px solid #E7E7E7;border-right:0;padding:0;">
 					<img src="http://web.shop.com:8020/webcode/resources/products/hao/big01.jpg" width="205" height="404" style="display: inline-block;"/>
 				</div>
-				<div class="col-md-10">
+				<div class="col-md-10" id="newgoods">
 					<div class="col-md-6" style="text-align:center;height:200px;padding:0px;">
 						<a href="product_info.htm">
 							<img src="http://web.shop.com:8020/webcode/resources/products/hao/middle01.jpg" width="516px" height="200px" style="display: inline-block;">
 						</a>
 					</div>
 				
-					<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
+					<!--<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
 						<a href="product_info.htm">
 							<img src="http://web.shop.com:8020/webcode/resources/products/hao/small03.jpg" width="130" height="130" style="display: inline-block;">
 						</a>
 						<p><a href="product_info.html" style='color:#666'>冬瓜</a></p>
 						<p><font color="#E4393C" style="font-size:16px">&yen;299.00</font></p>
-					</div>
+					</div>-->
 	
-					<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
-						<a href="product_info.htm">
-							<img src="http://web.shop.com:8020/webcode/resources/products/hao/small04.jpg" width="130" height="130" style="display: inline-block;">
-						</a>
-						<p><a href="product_info.html" style='color:#666'>冬瓜</a></p>
-						<p><font color="#E4393C" style="font-size:16px">&yen;299.00</font></p>
-					</div>
-
-					<div class="col-md-2 yes-right-border" style="text-align:center;height:200px;padding:10px 0px;">
-						<a href="product_info.htm">
-							<img src="http://web.shop.com:8020/webcode/resources/products/hao/small05.jpg" width="130" height="130" style="display: inline-block;">
-						</a>
-						<p><a href="product_info.html" style='color:#666'>冬瓜</a></p>
-						<p><font color="#E4393C" style="font-size:16px">&yen;299.00</font></p>
-					</div>
-					
-					<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
-						<a href="product_info.htm">
-							<img src="http://web.shop.com:8020/webcode/resources/products/hao/small03.jpg" width="130" height="130" style="display: inline-block;">
-						</a>
-						<p><a href="product_info.html" style='color:#666'>冬瓜</a></p>
-						<p><font color="#E4393C" style="font-size:16px">&yen;299.00</font></p>
-					</div>
-	
-					<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
-						<a href="product_info.htm">
-							<img src="http://web.shop.com:8020/webcode/resources/products/hao/small04.jpg" width="130" height="130" style="display: inline-block;">
-						</a>
-						<p><a href="product_info.html" style='color:#666'>冬瓜</a></p>
-						<p><font color="#E4393C" style="font-size:16px">&yen;299.00</font></p>
-					</div>
-
-					<div class="col-md-2 yes-right-border" style="text-align:center;height:200px;padding:10px 0px;">
-						<a href="product_info.htm">
-							<img src="http://web.shop.com:8020/webcode/resources/products/hao/small05.jpg" width="130" height="130" style="display: inline-block;">
-						</a>
-						<p><a href="product_info.html" style='color:#666'>冬瓜</a></p>
-						<p><font color="#E4393C" style="font-size:16px">&yen;299.00</font></p>
-					</div>
-					<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
-						<a href="product_info.htm">
-							<img src="http://web.shop.com:8020/webcode/resources/products/hao/small03.jpg" width="130" height="130" style="display: inline-block;">
-						</a>
-						<p><a href="product_info.html" style='color:#666'>冬瓜</a></p>
-						<p><font color="#E4393C" style="font-size:16px">&yen;299.00</font></p>
-					</div>
-	
-					<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
-						<a href="product_info.htm">
-							<img src="http://web.shop.com:8020/webcode/resources/products/hao/small04.jpg" width="130" height="130" style="display: inline-block;">
-						</a>
-						<p><a href="product_info.html" style='color:#666'>冬瓜</a></p>
-						<p><font color="#E4393C" style="font-size:16px">&yen;299.00</font></p>
-					</div>
-
-					<div class="col-md-2 yes-right-border" style="text-align:center;height:200px;padding:10px 0px;">
-						<a href="product_info.htm">
-							<img src="http://web.shop.com:8020/webcode/resources/products/hao/small05.jpg" width="130" height="130" style="display: inline-block;">
-						</a>
-						<p><a href="product_info.html" style='color:#666'>冬瓜</a></p>
-						<p><font color="#E4393C" style="font-size:16px">&yen;299.00</font></p>
-					</div>
 				</div>
 			</div>			
 			<div id="footer"  style="min-height: 203px;"></div>

@@ -13,6 +13,61 @@
 		<!-- 引入自定义css文件 style.css -->
 		<style>
 		</style>
+		<script>
+			$(function(){
+				$("#submit").click(function(){
+					HM.ajax("/order?md=createOrder","",function(vo){
+						if(vo.code == 1){
+							location.href = "../order/info.html";
+						}else{
+							alert(vo.data);
+						}
+				})
+				})
+				$(document).on("click",".deleteitem",function(){
+				HM.ajax("/cart?md=delCart","pid="+$(this).attr("pid"),function(vo){
+					location.reload();
+				})
+				})
+				$("#clearcart").click(function(){
+					HM.ajax("/cart?md=delAllCart","",function(vo){
+					location.reload();
+				})
+				})
+				
+				HM.ajax("/cart?md=getCart","",function(vo){
+					if(vo.code==1){
+						var items = vo.data.item;
+						for(it of items){
+							 var item = it.goods;
+							 
+							var cartItem = "<tr class=\"active\" ><td width=\"60\" width=\"40%\">\n" +
+        "\t\t\t\t\t\t\t\t\t\t<input type=\"hidden\" name=\"id\" value=\"22\">\n" +
+        "\t\t\t\t\t\t\t\t\t\t<img src=\"http://web.shop.com:8020/webcode/"+item.pimage+"\" width=\"70\" height=\"60\">\n" +
+        "\t\t\t\t\t\t\t\t\t</td>\n" +
+        "\t\t\t\t\t\t\t\t\t<td width=\"30%\">\n" +
+        "\t\t\t\t\t\t\t\t\t\t<a target=\"_blank\"> "+item.pname+"</a>\n" +
+        "\t\t\t\t\t\t\t\t\t</td>\n" +
+        "\t\t\t\t\t\t\t\t\t<td width=\"20%\">\n" +
+        "\t\t\t\t\t\t\t\t\t\t￥"+item.shop_price+"\n" +
+        "\t\t\t\t\t\t\t\t\t</td>\n" +
+        "\t\t\t\t\t\t\t\t\t<td width=\"10%\">\n" +
+        "\t\t\t\t\t\t\t\t\t\t"+it.goods_num+"\n" +
+        "\t\t\t\t\t\t\t\t\t</td>\n" +
+        "\t\t\t\t\t\t\t\t\t<td width=\"15%\">\n" +
+        "\t\t\t\t\t\t\t\t\t\t<span class=\"subtotal\">￥"+it.item_total+"</span>\n" +
+        "\t\t\t\t\t\t\t\t\t</td>\n" +
+        "\t\t\t\t\t\t\t\t\t<td>\n" +
+        "\t\t\t\t\t\t\t\t\t\t<a href=\"javascript:;\" class=\"deleteitem\" pid=\""+item.id+"\" >删除</a>\n" +
+        "\t\t\t\t\t\t\t\t\t</td></tr>";
+         			$("#cart").append(cartItem);
+						}
+						$("#total").html(vo.data.item_total)
+					}
+				})	
+})
+			
+</script>
 	</head>
 
 	<body>
@@ -24,7 +79,7 @@
 					<div style="margin:0 auto; margin-top:10px;width:950px;">
 						<strong style="font-size:16px;margin:5px 0;">购物车详情</strong>
 						<table class="table table-bordered">
-							<tbody>
+							<tbody id="cart">
 								<tr class="warning">
 									<th>图片</th>
 									<th>商品</th>
@@ -33,27 +88,7 @@
 									<th>小计</th>
 									<th>操作</th>
 								</tr>
-								<tr class="active">
-									<td width="60" width="40%">
-										<input type="hidden" name="id" value="22">
-										<img src="http://web.shop.com:8020/webcode/resources/products/1/donggua1.jpg" width="70" height="60">
-									</td>
-									<td width="30%">
-										<a target="_blank"> 有机蔬菜      大冬瓜...</a>
-									</td>
-									<td width="20%">
-										￥298.00
-									</td>
-									<td width="10%">
-										2
-									</td>
-									<td width="15%">
-										<span class="subtotal">￥596.00</span>
-									</td>
-									<td>
-										<a href="javascript:;" class="delete">删除</a>
-									</td>
-								</tr>
+								 
 							</tbody>
 						</table>
 					</div>
@@ -61,11 +96,12 @@
 	
 				<div style="margin-right:130px;">
 					<div style="text-align:right;">
-						商品金额: <strong style="color:#ff6600;">￥596.00元</strong>
+						商品金额: <strong style="color:#ff6600;">￥<span id="total"></span>元</strong>
 					</div>
 					<div style="text-align:right;margin-top:10px;margin-bottom:10px;">
-						<a href="order_info.htm" id="clear" class="clear">清空购物车</a>
-						<a href="order_info.htm">
+						<a href="javascript:;" id="clearcart" class="clear">清空购物车</a>
+						<!--<a href="../order/info.html">-->
+						<a href="javascript:;">
 							<input type="submit" width="100" value="提交订单" id="submit" border="0" style="background-color:#CD062D;height:35px;width:100px;color:white;">
 						</a>
 					</div>

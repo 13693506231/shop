@@ -20,7 +20,7 @@ $.ajaxSetup({
 
 var HM=
 	{
-		CTX:"http://api.shop.com",
+		CTX:"http://api.shop.com:8080",
 		getParameter:function(name){
 			var pvalues=this.getParameterValues(name);
 	    	return pvalues==null?null:pvalues[0];

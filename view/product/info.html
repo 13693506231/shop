@@ -16,6 +16,27 @@
 				text-decoration: none;
 			}
 		</style>
+		<script>
+			$(function(){
+				HM.ajax("/goodsServlet?md=getDetail","pid="+HM.getParameter("pid"),function(vo){
+					var goods = vo.data;
+					$("#goods_desc").html(goods.pdesc);
+					$("#goods_img").attr("src","http://web.shop.com:8020/webcode/"+goods.pimage);
+					$("#goods_shopprice").html(goods.shop_price);
+					$("#goods_markprice").html(goods.market_price);
+					$("#goods_name").html(goods.pname);
+				})
+				$("#addCart").click(function(){
+					var goods_num = $("#goods_num").val();
+					HM.ajax("/cart?md=addItem","pid="+HM.getParameter("pid")+"&goods_num="+goods_num,function(vo){
+						location.href = "../cart/list.html";
+				}) 
+				})
+
+			})
+		 
+
+		</script>
 	</head>
 
 	<body>
@@ -30,27 +51,28 @@
 	
 					<div style="margin:0 auto;width:950px;">
 						<div class="col-md-6">
-							<img style="opacity: 1;width:400px;height:350px;" title="" class="medium" src="http://web.shop.com:8020/webcode/resources/img/loading.gif">
+							<img style="opacity: 1;width:400px;height:350px;" title="" class="medium" id="goods_img" src="http://web.shop.com:8020/webcode/resources/img/loading.gif">
 						</div>
 	
 						<div class="col-md-6">
-							<div><strong>大冬瓜</strong></div>
+							<div><strong id="goods_name"><span id="goods_name"></span></strong></div>
 							<div style="border-bottom: 1px dotted #dddddd;width:350px;margin:10px 0 10px 0;">
-								<div>编号：751</div>
+								<div>编号：<span id="goods_id"></span></div>
 							</div>
 	
 							<div style="margin:10px 0 10px 0;">
-								一口价: <strong style="color:#ef0101;">&yen;<span>4.44</span>元/份</strong> 参 考 价: <del>￥6.00元/份</del>
+								一口价: <strong style="color:#ef0101;">&yen;<span id="goods_shopprice"></span>元/份</strong> 参 考 价: <del>￥<span id="goods_markprice"></span>元/份</del>
 							</div>
 	
 							<div style="margin:10px 0 10px 0;">促销: <a target="_blank" title="限时抢购 (2018-07-30 ~ 2018-09-01)" style="background-color: #f07373;">限时抢购</a> </div>
 	
 							<div style="padding:10px;border:1px solid #e7dbb1;width:330px;margin:15px 0 10px 0;;background-color: #fffee6;">
 								<div style="border-bottom: 1px solid #faeac7;margin-top:20px;padding-left: 10px;">购买数量:
-									<input id="quantity" name="quantity" value="1" maxlength="4" size="10" type="text"> </div>
+									<input name="quantity" id="goods_num"   maxlength="4" size="10" value="1" type="text"> </div>
 	
 								<div style="margin:20px 0px 10px 0px;padding-left: 70px;">
-									<a href="cart.htm">
+									<!--<a href="../cart/list.html">-->
+									<a href="javascript:;" id="addCart" >
 										<input style="background: url('http://web.shop.com:8020/webcode/resources/img/product.gif') no-repeat scroll 0 -600px rgba(0, 0, 0, 0);height:36px;width:127px;" value="加入购物车" type="button">
 									</a> 
 								</div>
@@ -63,14 +85,12 @@
 							<strong>商品介绍</strong>
 						</div>
 	
-						<div>
-							<img src="http://web.shop.com:8020/webcode/resources/img/loading.gif">
-						</div>
+				
 	
 						<div style="background-color:#d3d3d3;width:930px;padding:10px 10px;margin:10px 0 10px 0;">
 							<strong>商品参数</strong>
 						</div>
-						<div style="margin-top:10px;width:900px;">
+						<div style="margin-top:10px;width:900px;" id="goods_desc">
 							三防智能手机 移动/联通双4G 安全 黑黄色 双4G美国军工IP69 30天长待机 3米防水防摔 北斗
 						</div>
 	
