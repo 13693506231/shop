@@ -12,7 +12,10 @@ $.ajaxSetup({
     	}
     	if(xhr.status==405){
     		console.log("亲,请检查你是否实现了doPost方法...手动滑稽")
-    	}
+    		
+    		
+    		
+    	}   
         
     }
 
