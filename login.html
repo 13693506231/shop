@@ -20,7 +20,13 @@
 			    	
 			    	HM.ajax("/user?md=login",params,function(vo){
 			    		if(vo.code==1){
-			    			location.href="index.html";
+//			    			location.href="index.html";
+							var href = HM.getParameter("returnurl");
+							if(href != null){
+								location.href = href;
+							}else{
+								location.href="index.html";
+							}
 			    		}else{
 			    			$("#error").html(vo.data).css("color","red");
 			    		}

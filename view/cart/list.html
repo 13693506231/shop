@@ -18,9 +18,10 @@
 				$("#submit").click(function(){
 					HM.ajax("/order?md=createOrder","",function(vo){
 						if(vo.code == 1){
-							location.href = "../order/info.html";
+							location.href = "../order/info.html?orderid="+vo.data;
 						}else{
-							alert(vo.data);
+							location.href = "../../login.html?returnurl="+location.href
+//							alert(vo.data);
 						}
 				})
 				})
